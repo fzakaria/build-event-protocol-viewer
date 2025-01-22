@@ -21,6 +21,13 @@ export function DropZone({ onFile }: DropZoneProps) {
     if (file) onFile(file);
   }, [onFile]);
 
+  async function loadSampleFile() {
+    const response = await fetch('/samples/demo.pb');
+    const fileBlob = await response.blob();
+    const file = new File([fileBlob], 'demo.pb', { type: 'application/octet-stream' });
+    onFile(file);
+  }
+  
   return (
     <div
       className="border-2 border-dashed border-gray-300 rounded-lg p-12 text-center"
@@ -46,6 +53,14 @@ export function DropZone({ onFile }: DropZoneProps) {
       <p className="mt-2 text-xs text-gray-500">
         Supports Build Event Protocol binary files
       </p>
+
+      <button
+        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+        onClick={loadSampleFile}
+      >
+        Load Sample File
+      </button>
+      
     </div>
   );
 }
