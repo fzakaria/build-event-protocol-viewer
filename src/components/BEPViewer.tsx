@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Clock, Terminal, Beaker, Info, AlertCircle, CheckCircle, XCircle, Code } from 'lucide-react';
 import { FancyAnsi } from 'fancy-ansi';
+import InvocationDetails from './InvocationDetails';
 
 interface BEPViewerProps {
   data: any[];
@@ -13,6 +14,8 @@ interface BuildMetadata {
   success: boolean;
   duration: number;
   builtTargets: string[];
+  fetchEvents: string[];
+  packagesLoaded: number;
 }
 
 interface TestResult {
@@ -35,9 +38,11 @@ export function BEPViewer({ data }: BEPViewerProps) {
     let workspaceStatus = null;
     let success = true;
     let endTime = '';
+    let packagesLoaded = 0;
     const tests: TestResult[] = [];
     const logs: string[] = [];
     const targets: string[] = [];
+    const fetchEvents: string[] = [];
 
     data.forEach(event => {
       if (event.started) {
@@ -72,6 +77,14 @@ export function BEPViewer({ data }: BEPViewerProps) {
           logs.push(event.progress.stdout)
         }
       }
+
+      if (event.fetch && event.id?.fetch?.url) {
+        fetchEvents.push(event.id.fetch.url);
+      }
+
+      if (event.buildMetrics) {
+        packagesLoaded = event.buildMetrics.packageMetrics.packagesLoaded;
+      }
       
       if (event.id.targetCompleted && event.id.targetCompleted.label) {
         targets.push(event.id.targetCompleted.label);
@@ -83,7 +96,7 @@ export function BEPViewer({ data }: BEPViewerProps) {
         ? (new Date(endTime).getTime() - new Date(startTime).getTime()) / 1000
         : 0;
 
-    setMetadata({ startTime, command, workspaceStatus, success, duration, builtTargets: targets });
+    setMetadata({ startTime, command, workspaceStatus, success, duration, builtTargets: targets, fetchEvents, packagesLoaded });
     setTestResults(tests);
     setBuildLogs(logs);
   }, [data]);
@@ -295,6 +308,23 @@ export function BEPViewer({ data }: BEPViewerProps) {
 
   return (
     <div className="space-y-4">
+      <div className="p-6">
+        <h1 className="text-xl font-bold">Build Invocation Details</h1>
+        <InvocationDetails
+          pass={false}
+          duration={metadata ? metadata.duration : 0}
+          user="fmzakari"
+          cpu="k8"
+          hostname="nyx"
+          target="//..."
+          numTargets={metadata?.builtTargets.length || 0}
+          numPackages={metadata?.packagesLoaded || 0}
+          numFetches={metadata?.fetchEvents.length || 0}
+          remoteExecution={false}
+          caching={false}
+        />
+      </div>
+
       <div className="bg-white shadow-sm">
         <div className="border-b border-gray-200">
           <nav className="flex space-x-4 px-4" aria-label="Tabs">

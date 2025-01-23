@@ -49,7 +49,7 @@ function App() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+      <main className="max-w-7xl mx-auto px-4 py-0 sm:px-6 lg:px-8">
         {error && (
           <div className="mb-4 bg-red-50 border-l-4 border-red-400 p-4">
             <div className="flex">
