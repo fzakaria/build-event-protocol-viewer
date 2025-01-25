@@ -1,5 +1,7 @@
 <script lang="ts">
   import { state } from './store.svelte';
+  import { base } from '$app/paths';
+
   import { load, Reader } from 'protobufjs';
   import '@andypf/json-viewer';
 
@@ -9,7 +11,7 @@
 
   async function parseProto(file: File | undefined) {
     if (!file) return null;
-    const bes_proto_file = await load('/build_event_stream.proto');
+    const bes_proto_file = await load(`${base}/build_event_stream.proto`);
     const BuildEventType = bes_proto_file.lookupType('build_event_stream.BuildEvent');
     console.log(file instanceof Blob);
     const data = await file.arrayBuffer();
@@ -23,7 +25,7 @@
   }
 
   async function loadSampleFile() {
-    const response = await fetch('/samples/demo.pb');
+    const response = await fetch(`${base}/samples/demo.pb`);
     if (!response.ok) {
       throw new Error(`Failed to load the sample file: ${response.statusText}`);
     }
