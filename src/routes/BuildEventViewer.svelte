@@ -31,19 +31,21 @@
   </li>
 </ul>
 
+
 <div class="tab-content">
   {#if activeTab === 'Overview'}
     <div class="tab-pane show active">
-      <div class="container pt-3">
-        <div class="row">
-          <div class="col"></div>
+        <div class="container pt-3">
+            <div class="row">
+                <div class="col">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p>It is currently empty.</p>
+                </div>
+            </div>
         </div>
-        <div class="row">
-          <div class="col">
-            <p>It is currently empty.</p>
-          </div>
-        </div>
-      </div>
     </div>
   {:else if activeTab === 'Raw'}
     <div class="tab-pane show active">
