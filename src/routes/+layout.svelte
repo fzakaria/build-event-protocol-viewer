@@ -43,13 +43,20 @@
 
     <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
       <li class="ms-3">
-        <a class="font-monospace text-muted" href="https://github.com/fzakaria/bazel-build-event-viewer/commit/{version}">
-            {version.substring(0, 7)}
+        <a
+          class="font-monospace text-muted"
+          href="https://github.com/fzakaria/bazel-build-event-viewer/commit/{version}"
+        >
+          {version.substring(0, 7)}
         </a>
       </li>
       <li class="ms-3">
-        <a class="text-muted" href="https://github.com/fzakaria/bazel-build-event-viewer"
-           aria-label="GitHub repository" target="_blank" rel="noopener noreferrer"
+        <a
+          class="text-muted"
+          href="https://github.com/fzakaria/bazel-build-event-viewer"
+          aria-label="GitHub repository"
+          target="_blank"
+          rel="noopener noreferrer"
           ><svg class="bi" width="24" height="24"><use xlink:href="{icons}#github"></use></svg></a
         >
       </li>

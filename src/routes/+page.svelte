@@ -2,7 +2,7 @@
   import { state } from './store.svelte';
   import { base } from '$app/paths';
   import { decodeAll } from '$lib/proto-helpers';
-  import { load, Reader } from 'protobufjs';
+  import BuildEventViewer from './BuildEventViewer.svelte';
   import '@andypf/json-viewer';
 
   let file = $derived(state.files?.[0]);
@@ -29,7 +29,7 @@
       <span class="sr-only">Loading...</span>
     </div>
   {:then items}
-    <andypf-json-viewer expanded="2" data={items} show-toolbar="true"> </andypf-json-viewer>
+    <BuildEventViewer events={items} />
   {:catch reason}
     <div class="alert alert-danger" role="alert">{reason}</div>
   {/await}
