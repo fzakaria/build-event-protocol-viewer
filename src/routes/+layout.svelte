@@ -3,6 +3,7 @@
   // https://stackoverflow.com/a/75272446
   import 'bootstrap/dist/css/bootstrap.min.css';
   import 'bootstrap/dist/js/bootstrap.min.js';
+  import { base } from '$app/paths';
   import '../app.css';
 
   import { state } from './store.svelte';
@@ -16,7 +17,7 @@
       href="/"
       class="d-flex align-items-center mb-md-0 me-md-auto link-body-emphasis text-decoration-none mb-3"
     >
-      <img class="bi me-2" width="40" height="32" src="/bazel.svg" alt="" />
+      <img class="bi me-2" width="40" height="32" src={`${base}/bazel.svg`} alt="" />
       <span class="fs-4">Bazel Build Event Protocol</span>
     </a>
 
