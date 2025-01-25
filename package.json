@@ -40,6 +40,7 @@
   "dependencies": {
     "@andypf/json-viewer": "^2.1.7",
     "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
     "protobufjs": "^7.4.0"
   }
 }

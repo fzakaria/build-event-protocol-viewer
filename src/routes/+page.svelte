@@ -1,28 +1,13 @@
 <script lang="ts">
   import { state } from './store.svelte';
   import { base } from '$app/paths';
-
+  import { decodeAll } from '$lib/proto-helpers';
   import { load, Reader } from 'protobufjs';
   import '@andypf/json-viewer';
 
   let file = $derived(state.files?.[0]);
   let error: string | null = null;
-  let events = $derived(parseProto(file));
-
-  async function parseProto(file: File | undefined) {
-    if (!file) return null;
-    const bes_proto_file = await load(`${base}/build_event_stream.proto`);
-    const BuildEventType = bes_proto_file.lookupType('build_event_stream.BuildEvent');
-    console.log(file instanceof Blob);
-    const data = await file.arrayBuffer();
-    let reader = new Reader(new Uint8Array(data));
-    const events = [];
-    while (reader.pos < reader.len) {
-      const event = BuildEventType.decodeDelimited(reader);
-      events.push(event.toJSON());
-    }
-    return events;
-  }
+  let events = $derived(decodeAll(file));
 
   async function loadSampleFile() {
     const response = await fetch(`${base}/samples/demo.pb`);
