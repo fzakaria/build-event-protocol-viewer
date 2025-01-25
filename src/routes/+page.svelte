@@ -1,7 +1,7 @@
 <script lang="ts">
   import { state } from './store.svelte';
   import { load, Reader } from 'protobufjs';
-  import "@andypf/json-viewer"
+  import '@andypf/json-viewer';
 
   let file = $derived(state.files?.[0]);
   let error: string | null = null;
@@ -42,9 +42,7 @@
       <span class="sr-only">Loading...</span>
     </div>
   {:then items}
-  <andypf-json-viewer expanded=2 data={ items } show-toolbar="true">
-
-  </andypf-json-viewer>
+    <andypf-json-viewer expanded="2" data={items} show-toolbar="true"> </andypf-json-viewer>
   {:catch reason}
     <div class="alert alert-danger" role="alert">{reason}</div>
   {/await}
