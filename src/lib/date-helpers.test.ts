@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { humanizeDuration } from './build-event-summary';
+import { humanizeDuration } from './date-helpers';
 import moment from 'moment';
 
 test('humanizeDuration should return the correct string', () => {

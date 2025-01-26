@@ -21,6 +21,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Generate code
+        run: npm run genprotobuf
+
       - name: Run linter
         run: npm run lint
 

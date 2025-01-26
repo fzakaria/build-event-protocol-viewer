@@ -1,7 +1,8 @@
 <script lang="ts">
   import { Message } from 'protobufjs';
-  import { BuildEventSummaryProps, humanizeDuration } from '$lib/build-event-summary';
-
+  import { BuildEventSummaryProps } from '$lib/build-event-summary';
+  import { humanizeDuration } from '$lib/date-helpers';
+  
   function constructDetails(summary: BuildEventSummaryProps) {
     return [
       {

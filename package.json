@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
+    "genprotobuf": "pbjs -t static-module -w es6 static/build_event_stream.proto -o ./src/lib/generated/build_event_stream_proto.js && pbts -o ./src/lib/generated/build_event_stream_proto.d.ts ./src/lib/generated/build_event_stream_proto.js",
     "build": "vite build",
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
