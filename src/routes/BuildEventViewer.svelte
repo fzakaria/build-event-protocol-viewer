@@ -3,6 +3,7 @@
   import { build_event_stream } from '$lib/generated/build_event_stream_proto';
   import LogViewer from './LogViewer.svelte';
   import { BuildEventModel } from '$lib/build-event-model';
+  import BuildEventOverview from './BuildEventOverview.svelte';
 
   let { events = [] }: { events: build_event_stream.BuildEvent[] } = $props();
   let model = $derived(BuildEventModel.fromEvents(events));
@@ -45,14 +46,7 @@
   {#if activeTab === 'Overview'}
     <div class="tab-pane show active">
       <div class="container pt-3">
-        <div class="row">
-          <div class="col"></div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <p>It is currently empty.</p>
-          </div>
-        </div>
+        <BuildEventOverview {model} />
       </div>
     </div>
   {:else if activeTab === 'Logs'}
