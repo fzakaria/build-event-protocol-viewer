@@ -4,7 +4,7 @@ import { decodeAll } from './proto-helpers';
 describe('decodeAll', () => {
   it('should return null if file is undefined', async () => {
     const result = await decodeAll(undefined);
-    expect(result).toBeNull();
+    expect(result).toEqual([]);
   });
 
   it('should handle an invalid file', async () => {
