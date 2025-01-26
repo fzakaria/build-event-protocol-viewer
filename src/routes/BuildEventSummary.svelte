@@ -21,17 +21,18 @@
       { icon: 'bi-cpu-fill', text: summary.cpu, tooltip: 'CPU' },
       {
         icon: 'bi-sliders',
-        text: `${summary.numTargets} targets`,
+        // Don't use buildMetrics as it's deprecated for targets
+        text: `${summary.targetsConfigured.length} targets`,
         tooltip: 'Number of configured targets'
       },
       {
         icon: 'bi-box',
-        text: `${summary.numPackages} packages`,
+        text: `${summary.buildMetrics?.packageMetrics?.packagesLoaded || 0} packages`,
         tooltip: 'Number of packages'
       },
       {
         icon: 'bi-arrow-down-circle',
-        text: `${summary.numFetches} fetches`,
+        text: `${summary.fetches.length} fetches`,
         tooltip: 'Number of fetches'
       },
       {

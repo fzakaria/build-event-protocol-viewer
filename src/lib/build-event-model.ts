@@ -21,15 +21,12 @@ export class BuildEventModel {
   structuredCommandLines: command_line.CommandLine[] = [];
   unstructuredCommandLine?: build_event_stream.UnstructuredCommandLine;
 
-  numTargets: number;
-  numPackages: number;
-  numFetches: number;
+  fetches: build_event_stream.Fetch[] = [];
 
-  constructor(numTargets: number, numPackages: number, numFetches: number) {
-    this.numTargets = numTargets;
-    this.numPackages = numPackages;
-    this.numFetches = numFetches;
-  }
+  targetsConfigured: build_event_stream.TargetConfigured[] = [];
+  buildMetrics?: build_event_stream.BuildMetrics;
+
+  private constructor() {}
 
   hasRemoteExecution(): boolean {
     return (
@@ -105,7 +102,7 @@ export class BuildEventModel {
   }
 
   static fromEvents(events: build_event_stream.BuildEvent[]): BuildEventModel {
-    const model = new BuildEventModel(0, 0, 0);
+    const model = new BuildEventModel();
 
     // Extract the relevant events.
     for (const event of events) {
@@ -135,6 +132,14 @@ export class BuildEventModel {
         }
         const value = item?.value || '';
         model.workspaceStatusMap.set(item.key, value);
+      }
+
+      if (event.fetch) {
+        model.fetches.push(event.fetch as build_event_stream.Fetch);
+      }
+
+      if (event.configured) {
+        model.targetsConfigured.push(event.configured as build_event_stream.TargetConfigured);
       }
     }
 
