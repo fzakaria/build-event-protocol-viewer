@@ -32,7 +32,7 @@
       {
         icon: 'bi-arrow-down-circle',
         text: `${summary.numFetches} fetches`,
-        tooltip: 'Number of fetches',
+        tooltip: 'Number of fetches'
       },
       {
         icon: summary.hasRemoteExecution() ? 'bi-cloud-fill' : 'bi-cloud-slash-fill',
@@ -40,7 +40,7 @@
       },
       {
         icon: summary.hasCaching() ? 'bi-cloud-fill' : 'bi-cloud-slash-fill',
-        text: summary.hasCaching() ? 'Caching on' : 'Caching off',
+        text: summary.hasCaching() ? 'Caching on' : 'Caching off'
       }
     ];
   }

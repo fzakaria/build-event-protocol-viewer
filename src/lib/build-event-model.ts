@@ -129,7 +129,7 @@ export class BuildEventModel {
         model.structuredCommandLines.push(event.structuredCommandLine as command_line.CommandLine);
       }
 
-      for (let item of model.workspaceStatus?.item || []) {
+      for (const item of model.workspaceStatus?.item || []) {
         if (item.key == null) {
           continue;
         }

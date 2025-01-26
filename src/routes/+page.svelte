@@ -53,12 +53,16 @@
         to your <code>.bazelrc</code>
       </p>
       <!-- TODO: Fix using grid style instead -->
-      <div class="card m-2 rounded-0" style="display: inline-block; max-width: 100%;">
+      <div class="card rounded-0 m-2" style="display: inline-block; max-width: 100%;">
         <div class="card-body bg-light p-2">
           <code> common --build_event_binary_file=/path/to/file </code>
         </div>
       </div>
-      <p>The file generated will contain serialized protocol buffer messages that you can upload <i>here</i>.</p>
+      <p>
+        The file generated will contain serialized protocol buffer messages that you can upload <i
+          >here</i
+        >.
+      </p>
     </div>
   </div>
 {/if}
