@@ -2,7 +2,7 @@
   import { Message } from 'protobufjs';
   import BuildEventSummary from './BuildEventSummary.svelte';
 
-  let { events = [] }: { events: Message<object>[] | null } = $props();
+  let { events = [] }: { events: Message<object>[] } = $props();
 
   // State for the active tab
   let activeTab: 'Overview' | 'Raw' = $state('Overview');
@@ -12,7 +12,7 @@
   }
 </script>
 
-<BuildEventSummary />
+<BuildEventSummary {events} />
 
 <ul class="nav nav-tabs pt-3">
   <li class="nav-item">
@@ -31,22 +31,21 @@
   </li>
 </ul>
 
-
 <div class="tab-content">
   {#if activeTab === 'Overview'}
     <div class="tab-pane show active">
-        <div class="container pt-3">
-            <div class="row">
-                <div class="col">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <p>It is currently empty.</p>
-                </div>
-            </div>
+      <div class="container pt-3">
+        <div class="row">
+          <div class="col"></div>
         </div>
+        <div class="row">
+          <div class="col">
+            <p>It is currently empty.</p>
+          </div>
+        </div>
+      </div>
     </div>
+    <!-- FIXME: This might not be the best performance; we should consider hidden css as this reloads it. -->
   {:else if activeTab === 'Raw'}
     <div class="tab-pane show active">
       <andypf-json-viewer expanded="2" data={events} show-toolbar="true"> </andypf-json-viewer>
