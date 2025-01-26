@@ -26,7 +26,32 @@ export class BuildEventModel {
   targetsConfigured: build_event_stream.TargetConfigured[] = [];
   buildMetrics?: build_event_stream.BuildMetrics;
 
+  progress: build_event_stream.Progress[] = [];
+
   private constructor() {}
+
+  /**
+   * Get both stderr/stdout as a single string.
+   * This string may be ANSI encoded as it's the raw value from the
+   * terminal.
+   */
+  getLogs(): string {
+    // For each progress, we want to concat to create one big string
+    // if a progress has both stderr and stdout, stderr should be added first
+    // according to the proto.
+    return this.progress
+      .map((p) => {
+        let log = '';
+        if (p.stderr) {
+          log += p.stderr;
+        }
+        if (p.stdout) {
+          log += p.stdout;
+        }
+        return log;
+      })
+      .join('');
+  }
 
   hasRemoteExecution(): boolean {
     return (
@@ -140,6 +165,10 @@ export class BuildEventModel {
 
       if (event.configured) {
         model.targetsConfigured.push(event.configured as build_event_stream.TargetConfigured);
+      }
+
+      if (event.progress) {
+        model.progress.push(event.progress as build_event_stream.Progress);
       }
     }
 

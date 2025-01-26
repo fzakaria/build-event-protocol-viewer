@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { build_event_stream } from '$lib/generated/build_event_stream_proto';
   import { BuildEventModel } from '$lib/build-event-model';
   import { humanizeDuration } from '$lib/date-helpers';
 
@@ -46,10 +45,8 @@
     ];
   }
 
-  let { events = [] }: { events: build_event_stream.BuildEvent[] } = $props();
-
-  let summary = $derived(BuildEventModel.fromEvents(events));
-  let details = $derived(summary ? constructDetails(summary) : []);
+  let { model }: { model: BuildEventModel } = $props();
+  let details = $derived(constructDetails(model));
 </script>
 
 <div class="card">

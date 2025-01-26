@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@andypf/json-viewer": "^2.1.7",
+    "ansi_up": "^6.0.2",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "moment": "^2.30.1",
