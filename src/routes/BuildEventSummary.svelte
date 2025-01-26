@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { Message } from 'protobufjs';
-  import { BuildEventSummaryProps } from '$lib/build-event-summary';
+  import { build_event_stream } from '$lib/generated/build_event_stream_proto';
+  import { BuildEventModel } from '$lib/build-event-model';
   import { humanizeDuration } from '$lib/date-helpers';
-  
-  function constructDetails(summary: BuildEventSummaryProps) {
+
+  function constructDetails(summary: BuildEventModel) {
     return [
       {
-        icon: summary.success ? 'bi-check-circle-fill' : 'bi-x-circle-fill',
-        text: summary.success ? 'Passed' : 'Failed',
-        className: summary.success ? 'text-success' : 'text-danger'
+        icon: summary.isSuccess() ? 'bi-check-circle-fill' : 'bi-x-circle-fill',
+        text: summary.isSuccess() ? 'Passed' : 'Failed',
+        className: summary.isSuccess() ? 'text-success' : 'text-danger'
       },
       {
         icon: 'bi-clock',
@@ -16,7 +16,7 @@
         tooltip: 'Duration'
       },
       { icon: 'bi-person-fill', text: summary.user, tooltip: 'User' },
-      { icon: 'bi-server', text: summary.hostname, tooltip: 'Hostname' },
+      { icon: 'bi-server', text: summary.buildHost, tooltip: 'Hostname' },
       { icon: 'bi-grid', text: summary.command, tooltip: 'Command' },
       { icon: 'bi-cpu-fill', text: summary.cpu, tooltip: 'CPU' },
       {
@@ -36,39 +36,20 @@
         isActive: summary.numFetches > 0
       },
       {
-        icon: summary.remoteExecution ? 'bi-cloud-fill' : 'bi-cloud-slash-fill',
-        text: `Remote execution ${summary.remoteExecution ? 'on' : 'off'}`
+        icon: summary.hasRemoteExecution() ? 'bi-cloud-fill' : 'bi-cloud-slash-fill',
+        text: `Remote execution ${summary.hasRemoteExecution() ? 'on' : 'off'}`
       },
       {
-        icon: summary.caching ? 'bi-cloud-fill' : 'bi-cloud-slash-fill',
-        text: summary.caching ? 'Caching on' : 'Caching off',
-        isActive: summary.caching
+        icon: summary.hasCaching() ? 'bi-cloud-fill' : 'bi-cloud-slash-fill',
+        text: summary.hasCaching() ? 'Caching on' : 'Caching off',
+        isActive: summary.hasCaching()
       }
     ];
   }
 
-  function getBuildEventSummary(events: Message<object>[]): BuildEventSummaryProps {
-    const now = Date.now();
+  let { events = [] }: { events: build_event_stream.BuildEvent[] } = $props();
 
-    return new BuildEventSummaryProps(
-      true,
-      new Date(now - 13 * 6000),
-      new Date(),
-      'fmzakari',
-      'k8s',
-      'nyx',
-      'build //...',
-      3,
-      33,
-      5,
-      true,
-      false
-    );
-  }
-
-  let { events = [] }: { events: Message<object>[] } = $props();
-
-  let summary = $derived(getBuildEventSummary(events));
+  let summary = $derived(BuildEventModel.fromEvents(events));
   let details = $derived(summary ? constructDetails(summary) : []);
 </script>
 

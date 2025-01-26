@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { Message } from 'protobufjs';
   import BuildEventSummary from './BuildEventSummary.svelte';
+  import { build_event_stream } from '$lib/generated/build_event_stream_proto';
 
-  let { events = [] }: { events: Message<object>[] } = $props();
+  let { events = [] }: { events: build_event_stream.BuildEvent[] } = $props();
 
   // State for the active tab
   let activeTab: 'Overview' | 'Raw' = $state('Overview');
