@@ -5,14 +5,15 @@
   import { BuildEventModel } from '$lib/build-event-model';
   import BuildEventOverview from './BuildEventOverview.svelte';
   import BuildEventTestResults from './BuildEventTestResults.svelte';
+  import BuildEventTargets from './BuildEventTargets.svelte';
 
   let { events = [] }: { events: build_event_stream.BuildEvent[] } = $props();
   let model = $derived(BuildEventModel.fromEvents(events));
 
   // State for the active tab
-  let activeTab: 'Overview' | 'Tests' | 'Logs' | 'Raw' = $state('Overview');
+  let activeTab: 'Overview' | 'Targets' | 'Tests' | 'Logs' | 'Raw' = $state('Overview');
 
-  function setTab(tab: 'Overview' | 'Tests' | 'Logs' | 'Raw') {
+  function setTab(tab: 'Overview' | 'Targets' | 'Tests' | 'Logs' | 'Raw') {
     activeTab = tab;
   }
 </script>
@@ -25,6 +26,13 @@
       href="#overview"
       class="nav-link {activeTab === 'Overview' ? 'active' : ''}"
       onclick={() => setTab('Overview')}>Overview</a
+    >
+  </li>
+  <li class="nav-item">
+    <a
+      href="#targets"
+      class="nav-link {activeTab === 'Targets' ? 'active' : ''}"
+      onclick={() => setTab('Targets')}>Targets</a
     >
   </li>
   <li class="nav-item">
@@ -56,6 +64,10 @@
       <div class="container pt-3">
         <BuildEventOverview {model} />
       </div>
+    </div>
+  {:else if activeTab === 'Targets'}
+    <div class="container pt-2">
+      <BuildEventTargets {model} />
     </div>
   {:else if activeTab === 'Tests'}
     <div class="container pt-2">

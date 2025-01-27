@@ -21,7 +21,7 @@
       {
         icon: 'bi-sliders',
         // Don't use buildMetrics as it's deprecated for targets
-        text: `${summary.targetsConfigured.length} targets`,
+        text: `${summary.targetsConfigured.size} targets`,
         tooltip: 'Number of configured targets'
       },
       {

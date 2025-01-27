@@ -23,7 +23,9 @@ export class BuildEventModel {
 
   fetches: build_event_stream.Fetch[] = [];
 
-  targetsConfigured: build_event_stream.TargetConfigured[] = [];
+  targetsConfigured: Map<string, build_event_stream.TargetConfigured> = new Map();
+  targetsCompleted: Map<string, build_event_stream.TargetComplete> = new Map();
+
   buildMetrics?: build_event_stream.BuildMetrics;
 
   progress: build_event_stream.Progress[] = [];
@@ -171,7 +173,13 @@ export class BuildEventModel {
       }
 
       if (event.configured) {
-        model.targetsConfigured.push(event.configured as build_event_stream.TargetConfigured);
+        const label = event.id?.targetConfigured?.label || 'Unknown Label';
+        model.targetsConfigured.set(label, event.configured as build_event_stream.TargetConfigured);
+      }
+
+      if (event.completed) {
+        const label = event.id?.targetCompleted?.label || 'Unknown Label';
+        model.targetsCompleted.set(label, event.completed as build_event_stream.TargetComplete);
       }
 
       if (event.progress) {
