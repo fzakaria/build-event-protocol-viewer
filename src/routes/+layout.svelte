@@ -21,8 +21,8 @@
       href="{base}/"
       class="d-flex align-items-center mb-md-0 me-md-auto link-body-emphasis text-decoration-none mb-3"
     >
-      <img class="bi me-2" width="40" height="32" src={`${base}/bazel.svg`} alt="" />
-      <span class="fs-4">Bazel Build Event Protocol</span>
+      <img class="bi me-2" width="40" height="32" src={`${base}/magnifying-glass.svg`} alt="" />
+      <span class="fs-4">Build Event Protocol Viewer</span>
     </a>
 
     <div class="mb-3">
@@ -39,6 +39,10 @@
   <footer class="d-flex justify-content-between align-items-center border-top my-4 flex-wrap py-3">
     <div class="col-md-4 d-flex align-items-center">
       <span class="text-muted">© 2025 Farid Zakaria</span>
+    </div>
+
+    <div class="col-md-4 d-flex justify-content-center">
+      <p class="text-muted"><i>Not affiliated with Google or Bazel</i></p>
     </div>
 
     <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
