@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { google } from '$lib/generated/build_event_stream_proto';
 
 /**
  * Converts a duration in seconds to a human-readable string.
@@ -13,11 +14,27 @@ export function humanizeDuration(duration: number): string {
   const hours = d.hours();
   const minutes = d.minutes();
   const seconds = d.seconds();
+  const millis = d.milliseconds();
 
   const parts = [];
   if (hours > 0) parts.push(`${hours}h`);
   if (minutes > 0) parts.push(`${minutes}m`);
-  if (seconds > 0 || parts.length === 0) parts.push(`${seconds}s`);
+  if (seconds > 0) parts.push(`${seconds}s`);
+
+  if (parts.length == 0) {
+    return `${millis}ms`;
+  }
 
   return parts.join(' ');
+}
+
+/**
+ * Convert the google.protobuf.Duration to seconds.
+ */
+export function protoDurationToSeconds(
+  duration: google.protobuf.IDuration | null | undefined
+): number {
+  const seconds = Number(duration?.seconds || 0);
+  const nanos = duration?.nanos || 0;
+  return seconds + nanos / 1e9;
 }

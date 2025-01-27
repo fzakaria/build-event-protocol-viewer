@@ -4,14 +4,15 @@
   import LogViewer from './LogViewer.svelte';
   import { BuildEventModel } from '$lib/build-event-model';
   import BuildEventOverview from './BuildEventOverview.svelte';
+  import BuildEventTestResults from './BuildEventTestResults.svelte';
 
   let { events = [] }: { events: build_event_stream.BuildEvent[] } = $props();
   let model = $derived(BuildEventModel.fromEvents(events));
 
   // State for the active tab
-  let activeTab: 'Overview' | 'Logs' | 'Raw' = $state('Overview');
+  let activeTab: 'Overview' | 'Tests' | 'Logs' | 'Raw' = $state('Overview');
 
-  function setTab(tab: 'Overview' | 'Logs' | 'Raw') {
+  function setTab(tab: 'Overview' | 'Tests' | 'Logs' | 'Raw') {
     activeTab = tab;
   }
 </script>
@@ -24,6 +25,13 @@
       href="#overview"
       class="nav-link {activeTab === 'Overview' ? 'active' : ''}"
       onclick={() => setTab('Overview')}>Overview</a
+    >
+  </li>
+  <li class="nav-item">
+    <a
+      href="#tests"
+      class="nav-link {activeTab === 'Tests' ? 'active' : ''}"
+      onclick={() => setTab('Tests')}>Tests</a
     >
   </li>
   <li class="nav-item">
@@ -48,6 +56,10 @@
       <div class="container pt-3">
         <BuildEventOverview {model} />
       </div>
+    </div>
+  {:else if activeTab === 'Tests'}
+    <div class="container pt-2">
+      <BuildEventTestResults {model} />
     </div>
   {:else if activeTab === 'Logs'}
     <div class="container pt-2">

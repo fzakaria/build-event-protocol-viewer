@@ -28,6 +28,9 @@ export class BuildEventModel {
 
   progress: build_event_stream.Progress[] = [];
 
+  testSummaries: Map<string, build_event_stream.TestSummary> = new Map();
+  testResults: Map<string, build_event_stream.TestResult[]> = new Map();
+
   private constructor() {}
 
   /**
@@ -126,6 +129,10 @@ export class BuildEventModel {
     return moment.duration(diffMs).asSeconds();
   }
 
+  static isSuccessfulTestSummary(summary: build_event_stream.TestSummary): boolean {
+    return summary.overallStatus === build_event_stream.TestStatus.PASSED;
+  }
+
   static fromEvents(events: build_event_stream.BuildEvent[]): BuildEventModel {
     const model = new BuildEventModel();
 
@@ -169,6 +176,21 @@ export class BuildEventModel {
 
       if (event.progress) {
         model.progress.push(event.progress as build_event_stream.Progress);
+      }
+
+      if (event.testSummary) {
+        const label = event.id?.testSummary?.label || 'Unknown Label';
+        const testSummary = event.testSummary as build_event_stream.TestSummary;
+        model.testSummaries.set(label, testSummary);
+      }
+
+      if (event.testResult) {
+        const label = event.id?.testResult?.label || 'Unknown Label';
+        const testResult = event.testResult as build_event_stream.TestResult;
+        if (!model.testResults.has(label)) {
+          model.testResults.set(label, []);
+        }
+        model.testResults.get(label)?.push(testResult);
       }
     }
 
