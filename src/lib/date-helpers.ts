@@ -28,6 +28,11 @@ export function humanizeDuration(duration: number): string {
   return parts.join(' ');
 }
 
+export function protoTimestampDate(timestamp: google.protobuf.ITimestamp | null | undefined): Date {
+  const millis = Number(timestamp?.seconds || 0) * 1e3 + Number(timestamp?.nanos || 0) / 1e6;
+  return new Date(millis);
+}
+
 /**
  * Convert the google.protobuf.Duration to seconds.
  */

@@ -1,9 +1,20 @@
 <script lang="ts">
   import { BuildEventModel } from '$lib/build-event-model';
-  import { humanizeDuration, protoDurationToSeconds } from '$lib/date-helpers';
+  import { humanizeDuration, protoDurationToSeconds, protoTimestampDate } from '$lib/date-helpers';
   import { build_event_stream } from '$lib/generated/build_event_stream_proto';
+  import { SvelteSet } from 'svelte/reactivity';
 
   let { model }: { model: BuildEventModel } = $props();
+
+  let expandedRows = $state(new SvelteSet<number>());
+
+  function toggleRow(index: number): void {
+    if (expandedRows.has(index)) {
+      expandedRows.delete(index);
+    } else {
+      expandedRows.add(index);
+    }
+  }
 
   function testStatusToBadgeColor(status: build_event_stream.TestStatus): string {
     switch (status) {
@@ -42,8 +53,8 @@
           </tr>
         </thead>
         <tbody>
-          {#each [...model.testSummaries] as [label, summary]}
-            <tr>
+          {#each [...model.testSummaries] as [label, summary], index}
+            <tr onclick={() => toggleRow(index)} class="cursor-pointer">
               <td>{label}</td>
               <td>
                 <span class="badge {testStatusToBadgeColor(summary.overallStatus)}">
@@ -53,6 +64,43 @@
               <td>{humanizeDuration(protoDurationToSeconds(summary.totalRunDuration))}</td>
               <td>{summary.attemptCount}</td>
             </tr>
+            <!-- Collapsible Details Row -->
+            {#if expandedRows.has(index)}
+              <tr style="pointer-events: none;">
+                <td class="p-3">
+                  {#if (model.testResults.get(label) ?? []).length > 0}
+                    <table class="table">
+                      <thead class="table-light">
+                        <tr>
+                          <th>Date</th>
+                          <th>Run</th>
+                          <th>Status</th>
+                          <th>Duration</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {#each model.testResults.get(label) ?? [] as result, resultIndex}
+                          <tr>
+                            <td>{protoTimestampDate(result.testAttemptStart).toLocaleString()}</td>
+                            <td>{resultIndex + 1}</td>
+                            <td>
+                              <span class="badge {testStatusToBadgeColor(result.status)}">
+                                {build_event_stream.TestStatus[result.status]}
+                              </span>
+                            </td>
+                            <td>
+                              {humanizeDuration(protoDurationToSeconds(result.testAttemptDuration))}
+                            </td>
+                          </tr>
+                        {/each}
+                      </tbody>
+                    </table>
+                  {:else}
+                    <div class="text-muted">No individual test runs available.</div>
+                  {/if}
+                </td>
+              </tr>
+            {/if}
           {/each}
         </tbody>
       </table>
