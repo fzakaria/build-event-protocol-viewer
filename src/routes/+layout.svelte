@@ -17,7 +17,9 @@
 
 <div class="container">
   <header class="d-flex justify-content-center border-bottom mb-4 flex-wrap py-3">
+    <!-- https://svelte.dev/docs/kit/link-options#data-sveltekit-reload -->
     <a
+      data-sveltekit-reload
       href="{base}/"
       class="d-flex align-items-center mb-md-0 me-md-auto link-body-emphasis text-decoration-none mb-3"
     >
