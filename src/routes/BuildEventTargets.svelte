@@ -21,6 +21,7 @@
       <table class="table-hover table">
         <thead class="table-light">
           <tr>
+            <th></th>
             <th>Label</th>
             <th>Kind</th>
             <th>Status</th>
@@ -29,6 +30,13 @@
         <tbody>
           {#each [...model.targetsConfigured] as [label, configured]}
             <tr class="cursor-pointer" onclick={() => toggleRow(label)}>
+              <td>
+                <i
+                  class={expandedRows.has(label)
+                    ? 'bi bi-chevron-contract'
+                    : 'bi bi-chevron-expand'}
+                ></i>
+              </td>
               <td>{label}</td>
               <td>{configured.targetKind.replace(/rule/g, '').trim()}</td>
               <td>
@@ -42,6 +50,7 @@
             <!-- Expandable Row -->
             {#if expandedRows.has(label)}
               <tr style="pointer-events: none;">
+                <td></td>
                 <td class="p-3">
                   {#if (model.targetsCompleted.get(label)?.importantOutput?.length ?? 0) > 0}
                     <table class="table">

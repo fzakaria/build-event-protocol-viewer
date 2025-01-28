@@ -46,6 +46,7 @@
       <table class="table-hover table">
         <thead class="table-light">
           <tr>
+            <th></th>
             <th>Test Name</th>
             <th>Status</th>
             <th>Duration</th>
@@ -55,6 +56,13 @@
         <tbody>
           {#each [...model.testSummaries] as [label, summary], index}
             <tr onclick={() => toggleRow(index)} class="cursor-pointer">
+              <td>
+                <i
+                  class={expandedRows.has(index)
+                    ? 'bi bi-chevron-contract'
+                    : 'bi bi-chevron-expand'}
+                ></i>
+              </td>
               <td>{label}</td>
               <td>
                 <span class="badge {testStatusToBadgeColor(summary.overallStatus)}">
@@ -67,6 +75,7 @@
             <!-- Collapsible Details Row -->
             {#if expandedRows.has(index)}
               <tr style="pointer-events: none;">
+                <td></td>
                 <td class="p-3">
                   {#if (model.testResults.get(label) ?? []).length > 0}
                     <table class="table">
