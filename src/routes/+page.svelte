@@ -59,9 +59,16 @@
         </div>
       </div>
       <p>
-        The file generated will contain serialized protocol buffer messages that you can upload <i
-          >here</i
+        The file generated will contain serialized protocol buffer messages that you can upload <u
+          >here</u
         >.
+      </p>
+      <p class="text-body-secondary p-3">
+        <i>
+          This application is a Single Page Application (SPA) and operates entirely within your
+          browser. The file you upload never leaves your local environment, ensuring your data
+          remains private and secure.
+        </i>
       </p>
     </div>
   </div>
