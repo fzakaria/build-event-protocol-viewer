@@ -1,9 +1,7 @@
 <script lang="ts">
   // Import bootstrap
   // https://stackoverflow.com/a/75272446
-  import 'bootstrap/dist/css/bootstrap.min.css';
   import 'bootstrap/dist/js/bootstrap.min.js';
-  import 'bootstrap-icons/font/bootstrap-icons.min.css';
   import icons from 'bootstrap-icons/bootstrap-icons.svg';
   import { base } from '$app/paths';
   import { version } from '$app/environment';
