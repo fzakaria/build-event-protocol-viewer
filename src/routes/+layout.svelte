@@ -37,11 +37,11 @@
 <div class="container">
   <footer class="d-flex justify-content-between align-items-center border-top my-4 flex-wrap py-3">
     <div class="col-md-4 d-flex align-items-center">
-      <span class="text-muted">© 2025 Farid Zakaria</span>
+      <span class="text-muted">© 2025 <a href="https://fzakaria.com">Farid Zakaria</a></span>
     </div>
 
     <div class="col-md-4 d-flex justify-content-center">
-      <p class="text-muted"><i>Not affiliated with Google or Bazel</i></p>
+      <span class="text-muted"><i>Not affiliated with Google or Bazel</i></span>
     </div>
 
     <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
