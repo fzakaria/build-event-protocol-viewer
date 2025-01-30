@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { state } from './store.svelte';
+  import { store } from './store.svelte';
   import { base } from '$app/paths';
   import { decodeAll } from '$lib/proto-helpers';
   import BuildEventViewer from './BuildEventViewer.svelte';
-  import 'bootstrap/dist/js/bootstrap.min.js';
   import '@andypf/json-viewer';
 
-  let file = $derived(state.files?.[0]);
+  let showAlert = $state(true);
+  let file = $derived(store.files?.[0]);
   let error: string | null = null;
   let events = $derived(decodeAll(file));
 
@@ -19,7 +19,7 @@
     const file = new File([blob], 'demo.pb', { type: blob.type });
     const dataTransfer = new DataTransfer();
     dataTransfer.items.add(file);
-    state.files = dataTransfer.files;
+    store.files = dataTransfer.files;
   }
 </script>
 
@@ -37,11 +37,18 @@
 {:else if error}
   <div class="alert alert-danger" role="alert">{error}</div>
 {:else}
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    Please select a file to view.
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-  <button class="btn btn-primary mt-3" onclick={loadSampleFile}> Load Sample File </button>
+  {#if showAlert}
+    <div class="alert alert-warning alert-dismissible" role="alert">
+      Please select a file to view.
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        onclick={() => (showAlert = !showAlert)}
+      ></button>
+    </div>
+  {/if}
+  <button class="btn btn-primary" onclick={loadSampleFile}> Load Sample File </button>
   <div class="card mt-3">
     <div class="card-body">
       <p>

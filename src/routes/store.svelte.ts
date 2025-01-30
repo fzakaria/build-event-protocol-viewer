@@ -1,4 +1,4 @@
-export const state = $state<{
+export const store = $state<{
   files: FileList | null;
 }>({
   files: null

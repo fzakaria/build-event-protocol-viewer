@@ -1,14 +1,13 @@
 <script lang="ts">
   // Import bootstrap
   // https://stackoverflow.com/a/75272446
-  import 'bootstrap/dist/js/bootstrap.min.js';
   import icons from 'bootstrap-icons/bootstrap-icons.svg';
   import { base } from '$app/paths';
   import { version } from '$app/environment';
 
   import '../app.css';
 
-  import { state } from './store.svelte';
+  import { store } from './store.svelte';
 
   let { children } = $props();
 </script>
@@ -26,7 +25,7 @@
     </a>
 
     <div class="mb-3">
-      <input bind:files={state.files} class="form-control" type="file" id="formFile" />
+      <input bind:files={store.files} class="form-control" type="file" id="formFile" />
     </div>
   </header>
 </div>
