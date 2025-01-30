@@ -24,3 +24,6 @@ vite.config.ts.timestamp-*
 
 # Don't include generated files
 src/lib/generated
+
+# Don't include result
+result
