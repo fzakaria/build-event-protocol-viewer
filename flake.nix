@@ -27,7 +27,7 @@
         env = {
           NIX_GIT_REVISION = self.rev or self.dirtyRev or "dirty";
         };
-        npmDepsHash = "sha256-uWMFlVwqLyfn4duGU5ZB3icavemHpRAfNwsC/lzrrTU=";
+        npmDepsHash = "sha256-TjSAh3x5wJ4MkZ6FK6cuOvdMK6wQkoPqgIDaM+E49oM=";
         npmBuild = "npm run build";
         # nix-gitignore doesn't seem to keep the generated directory
         preBuild = "mkdir -p ./src/lib/generated && npm run genprotobuf";
