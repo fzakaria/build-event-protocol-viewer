@@ -27,13 +27,25 @@
         env = {
           NIX_GIT_REVISION = self.rev or self.dirtyRev or "dirty";
         };
-        npmDepsHash = "sha256-TjSAh3x5wJ4MkZ6FK6cuOvdMK6wQkoPqgIDaM+E49oM=";
+        # Let's try importNpmLock so we do't have to manually update a hash
+        # so that dependabot can do its job
+        # https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/javascript.section.md#importnpmlock-javascript-buildnpmpackage-importnpmlock
+        npmDeps = pkgs.importNpmLock {
+          npmRoot = ./.;
+        };
+        npmConfigHook = pkgs.importNpmLock.npmConfigHook;
         npmBuild = "npm run build";
         # nix-gitignore doesn't seem to keep the generated directory
         preBuild = "mkdir -p ./src/lib/generated && npm run genprotobuf";
         installPhase = ''
           mkdir $out
           cp -r build/* $out
+        '';
+        doCheck = true;
+        checkPhase = ''
+          npm run lint
+          npm run check
+          npm run test
         '';
       };
     });
