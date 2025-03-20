@@ -27,6 +27,7 @@ nix run github:fzakaria/build-event-protocol-viewer
 
 ```sh
 npm install
+npm run genprotobuf
 npm run dev
 ```
 
