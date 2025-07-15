@@ -38,7 +38,7 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
-    "@andypf/json-viewer": "^2.1.10",
+    "@andypf/json-viewer": "^2.2.0",
     "ansi_up": "^6.0.6",
     "bootstrap": "^5.3.7",
     "bootstrap-icons": "^1.13.1",
