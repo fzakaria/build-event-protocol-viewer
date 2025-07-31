@@ -30,9 +30,9 @@
         tooltip: 'Number of packages'
       },
       {
-        icon: 'bi-arrow-down-circle',
-        text: `${summary.fetches.length} fetches`,
-        tooltip: 'Number of fetches'
+        icon: 'bi-bar-chart-steps',
+        text: `${summary.buildMetrics?.actionSummary?.actionsExecuted || 0} actions`,
+        tooltip: 'Number of actions'
       },
       {
         icon: summary.hasRemoteExecution() ? 'bi-cloud-fill' : 'bi-cloud-slash-fill',
