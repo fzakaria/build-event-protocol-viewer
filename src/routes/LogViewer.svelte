@@ -10,6 +10,7 @@
 
 <div class="card border-0 shadow-sm">
   <div class="card-body bg-dark text-light font-monospace overflow-auto rounded">
+    <!-- eslint-disable-next-line svelte/require-each-key -->
     {#each spans as span}
       <!-- eslint-disable-next-line svelte/no-at-html-tags -->
       {@html span}

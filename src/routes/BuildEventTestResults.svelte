@@ -6,7 +6,7 @@
 
   let { model }: { model: BuildEventModel } = $props();
 
-  let expandedRows = $state(new SvelteSet<number>());
+  let expandedRows = new SvelteSet<number>();
 
   function toggleRow(index: number): void {
     if (expandedRows.has(index)) {
@@ -54,6 +54,7 @@
           </tr>
         </thead>
         <tbody>
+          <!-- eslint-disable-next-line svelte/require-each-key -->
           {#each [...model.testSummaries] as [label, summary], index}
             <tr onclick={() => toggleRow(index)} class="cursor-pointer">
               <td>
@@ -88,6 +89,7 @@
                         </tr>
                       </thead>
                       <tbody>
+                        <!-- eslint-disable-next-line svelte/require-each-key -->
                         {#each model.testResults.get(label) ?? [] as result, resultIndex}
                           <tr>
                             <td>{protoTimestampDate(result.testAttemptStart).toLocaleString()}</td>
