@@ -4,7 +4,7 @@
 
   let { model }: { model: BuildEventModel } = $props();
 
-  let expandedRows = $state(new SvelteSet<string>());
+  let expandedRows = new SvelteSet<string>();
 
   function toggleRow(label: string): void {
     if (expandedRows.has(label)) {
@@ -28,6 +28,7 @@
           </tr>
         </thead>
         <tbody>
+          <!-- eslint-disable-next-line svelte/require-each-key -->
           {#each [...model.targetsConfigured] as [label, configured]}
             <tr class="cursor-pointer" onclick={() => toggleRow(label)}>
               <td>
@@ -60,6 +61,7 @@
                         </tr>
                       </thead>
                       <tbody>
+                        <!-- eslint-disable-next-line svelte/require-each-key -->
                         {#each model.targetsCompleted.get(label)!.importantOutput as file}
                           <tr>
                             <td>{file.name}</td>

@@ -1,5 +1,3 @@
-export const store = $state<{
-  files: FileList | null;
-}>({
+export const store: { files: FileList | null } = $state({
   files: null
 });

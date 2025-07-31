@@ -53,6 +53,7 @@
   <div class="card-body">
     <div class="container">
       <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-1">
+        <!-- eslint-disable-next-line svelte/require-each-key -->
         {#each details as detail}
           <div class="col">
             <div class="d-flex align-items-center">

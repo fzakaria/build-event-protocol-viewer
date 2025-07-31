@@ -3,6 +3,7 @@ import js from '@eslint/js';
 import { includeIgnoreFile } from '@eslint/compat';
 import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
+import svelteConfig from './svelte.config.js';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
 const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
@@ -23,11 +24,14 @@ export default ts.config(
     }
   },
   {
-    files: ['**/*.svelte'],
+    files: ['**/*.svelte', '**/*.svelte.ts'],
 
     languageOptions: {
       parserOptions: {
-        parser: ts.parser
+        projectService: true,
+        extraFileExtensions: ['.svelte'], // Add support for additional file extensions, such as .svelte
+        parser: ts.parser,
+        svelteConfig
       }
     }
   }
