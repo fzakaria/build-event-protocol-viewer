@@ -58,20 +58,26 @@ export class BuildEventModel {
       .join('');
   }
 
+  hasOption(optionName: string): boolean {
+    const commandLine = this.structuredCommandLines?.find((cmd) => {
+      return cmd.commandLineLabel === 'canonical';
+    });
+    for (const section of commandLine?.sections || []) {
+      for (const option of section.optionList?.option || []) {
+        if (option.optionName === optionName) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   hasRemoteExecution(): boolean {
-    return (
-      this.unstructuredCommandLine?.args.some((str) => {
-        str.includes('remote_executor');
-      }) || false
-    );
+    return this.hasOption('remote_executor');
   }
 
   hasCaching(): boolean {
-    return (
-      this.unstructuredCommandLine?.args.some((str) => {
-        str.includes('remote_cache');
-      }) || false
-    );
+    return this.hasOption('remote_cache');
   }
 
   get cpu(): string {
@@ -88,9 +94,10 @@ export class BuildEventModel {
 
   /**
    * The build was successful if the exitCode in the event has a 0.
+   * Sometimes there is no exit code and only the name is set to SUCCESS.
    */
   isSuccess(): boolean {
-    return this.exitCode == 0;
+    return this.exitCode == 0 || this.finished?.exitCode?.name === 'SUCCESS';
   }
 
   get exitCode(): number {
@@ -158,6 +165,10 @@ export class BuildEventModel {
       }
       if (event.structuredCommandLine) {
         model.structuredCommandLines.push(event.structuredCommandLine as command_line.CommandLine);
+      }
+
+      if (event.buildMetrics) {
+        model.buildMetrics = event.buildMetrics as build_event_stream.BuildMetrics;
       }
 
       for (const item of model.workspaceStatus?.item || []) {
